@@ -9,9 +9,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.model.PlacesSearchResult;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -19,7 +19,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     GetUrlInformation getUrlInformation=new GetUrlInformation();
-    ArrayList<RestaurentSummary> ListRestaurents=new ArrayList<RestaurentSummary>();
+    ArrayList<PlacesSearchResult> listRestaurents =new ArrayList<PlacesSearchResult>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        getUrlInformation.getrestaurents(this,ListRestaurents);
+        getUrlInformation.getrestaurents(this, listRestaurents);
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
