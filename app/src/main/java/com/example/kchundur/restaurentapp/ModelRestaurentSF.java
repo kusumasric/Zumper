@@ -12,12 +12,12 @@ import java.util.Observable;
  * Created by kchundur on 3/10/2018.
  */
 
-public class ModalRestaurentSF extends Observable {
+public class ModelRestaurentSF extends Observable {
 
     private ArrayList<PlacesSearchResult> listRestaurents;
 
 
-    public ModalRestaurentSF()
+    public ModelRestaurentSF()
     {
         listRestaurents=new ArrayList<PlacesSearchResult>();
 

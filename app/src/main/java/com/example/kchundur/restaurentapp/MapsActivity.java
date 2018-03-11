@@ -1,5 +1,6 @@
 package com.example.kchundur.restaurentapp;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -8,10 +9,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.model.PlacesSearchResult;
 
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,7 +20,7 @@ import java.util.Observer;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,Observer {
 
     private GoogleMap mMap;
-    private ModalRestaurentSF modal;
+    private ModelRestaurentSF modal;
 
 
 
@@ -31,7 +32,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        modal=new ModalRestaurentSF();
+        modal=new ModelRestaurentSF();
         modal.addObserver(this);
     }
 
@@ -49,15 +50,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         GetUrlInformation geturl=new GetUrlInformation(modal);
-        geturl.getrestaurents(this);
 
+        geturl.getrestaurents(this);
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+
+                StringBuilder placeid= (StringBuilder) marker.getTag();
+
+                Intent intent = new Intent(getApplicationContext(),Restaurentinfo_View.class);
+                intent.putExtra("placeid", placeid.toString());
+                startActivity(intent);
+
+
+            }
+        });
         LatLng sanFrancisco = new LatLng(36, -122);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sanFrancisco));
     }
 
     private void refreshUI(){
         for(PlacesSearchResult restaurent: modal.getRestaurents()){
-            mMap.addMarker(new MarkerOptions().position(new LatLng( restaurent.geometry.location.lat, restaurent.geometry.location.lng)).title(restaurent.name));
+            StringBuilder s=new StringBuilder();
+            s.append(restaurent.placeId);
+            mMap.addMarker(new MarkerOptions().position(new LatLng( restaurent.geometry.location.lat, restaurent.geometry.location.lng)).title(restaurent.name)).setTag(s);
+
         }
     }
 
