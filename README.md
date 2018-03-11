@@ -1,12 +1,12 @@
 # Zumper
 
 
-##API's Used-
+## API's Used-
 
 1.https://developers.google.com/places/web-service/details
 2.2)https://maps.googleapis.com/maps/api/place/textsearch/xml?query=restaurants+in+Sydney&key=YOUR_API_KEY
 
-##Libraries Used:-
+## Libraries Used:-
 
 
 1. compile 'com.googlecode.json-simple:json-simple:1.1'  -JSon
@@ -16,9 +16,9 @@
 
 ## Naming Convention
 
-1.Used Camel Case Naming conventions
+Used Camel Case Naming conventions
 
-##Architecture
+## Architecture
 
-1.Used MVC Architecture.
+Used MVC Architecture.
 
