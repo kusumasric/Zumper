@@ -12,14 +12,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.model.PlacesSearchResult;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,Observer {
 
     private GoogleMap mMap;
+    private ModalRestaurentSF modal;
 
-    GetUrlInformation getUrlInformation=new GetUrlInformation();
-    ArrayList<PlacesSearchResult> listRestaurents =new ArrayList<PlacesSearchResult>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        modal=new ModalRestaurentSF();
+        modal.addObserver(this);
     }
 
 
@@ -44,11 +48,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        GetUrlInformation geturl=new GetUrlInformation(modal);
+        geturl.getrestaurents(this);
 
-        getUrlInformation.getrestaurents(this, listRestaurents);
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng sanFrancisco = new LatLng(36, -122);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sanFrancisco));
+    }
+
+    private void refreshUI(){
+        for(PlacesSearchResult restaurent: modal.getRestaurents()){
+            mMap.addMarker(new MarkerOptions().position(new LatLng( restaurent.geometry.location.lat, restaurent.geometry.location.lng)).title(restaurent.name));
+        }
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        refreshUI();
     }
 }
