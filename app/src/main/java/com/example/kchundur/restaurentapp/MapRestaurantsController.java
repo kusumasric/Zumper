@@ -24,45 +24,45 @@ import java.util.List;
  * Created by kchundur on 3/10/2018.
  */
 
-public class GetUrlInformation {
+public class MapRestaurantsController {
 
-    ModelRestaurentSF modalRestaurentSF;
+    MapRestaurantsModel mapRestaurantsModel;
 
-    public  GetUrlInformation(ModelRestaurentSF modalRestaurentSF){
-        this.modalRestaurentSF = modalRestaurentSF;
+    private static final String RESTAURANTS_IN_SAN_FRANCISCO = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+SanFrancisco&key=AIzaSyB-bpw0ollWA5AKpT11Y2CL2qPFs4kC_dk";
+
+
+    public MapRestaurantsController(MapRestaurantsModel mapRestaurantsModel){
+        this.mapRestaurantsModel = mapRestaurantsModel;
     }
 
-    public void getrestaurents(Context context) {
+    public void getRestaurants(Context context) {
 
-
-        String restaurentsInSanFrancisco = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurants+in+SanFrancisco&key=AIzaSyB-bpw0ollWA5AKpT11Y2CL2qPFs4kC_dk";
-
-        // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context.getApplicationContext());
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                restaurentsInSanFrancisco,
+                RESTAURANTS_IN_SAN_FRANCISCO,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("debug", "came here");
-                        Log.d("retaurents","got"+response);
                         try {
+                            List<PlacesSearchResult> restaurants = new ArrayList<>();
+
                             Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
                             JSONArray results = (JSONArray) response.get("results");
-                            List<PlacesSearchResult> restaurents = new ArrayList<>();
-                            for(int i=0;i<results.length();i++)
+
+                            for(int i=0; i<results.length(); i++)
                             {
-                                JSONObject restaurent = (JSONObject)results.get(i);
-                                PlacesSearchResult result = gson.fromJson(restaurent.toString(), PlacesSearchResult.class);
-                                restaurents.add(result);
+                                JSONObject restaurant = (JSONObject)results.get(i);
+                                PlacesSearchResult placesSearchResult = gson.fromJson(restaurant.toString(), PlacesSearchResult.class);
+                                restaurants.add(placesSearchResult);
                             }
-                            modalRestaurentSF.addRestaurents(restaurents);
+
+                            mapRestaurantsModel.addRestaurants(restaurants);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
 
                     }
                 },

@@ -8,23 +8,23 @@ import java.util.Observable;
  * Created by kchundur on 3/10/2018.
  */
 
-public class ModelSingleRestaurent extends Observable {
+public class RestaurentDetailModel extends Observable {
 
-    private PlaceDetails placedetail;
+    private PlaceDetails placeDetails;
 
-    public ModelSingleRestaurent()
+    public RestaurentDetailModel()
     {
-        placedetail=new PlaceDetails();
+        placeDetails =new PlaceDetails();
     }
 
     public PlaceDetails getPlaceDetails()
     {
-        return placedetail;
+        return placeDetails;
     }
 
-    public void setPlacedetail(PlaceDetails place)
+    public void setPlaceDetails(PlaceDetails place)
     {
-        placedetail=place;
+        placeDetails =place;
         setChanged();
         notifyObservers();
     }

@@ -19,16 +19,42 @@
         android:layout_height="wrap_content" />
 
     <TextView
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="10pt"
+    android:text="Location"
+    android:textSize="10pt"
+    android:textColor="@color/colorPrimary"
+    android:textIsSelectable="true"
+    android:layout_centerHorizontal="true"
+    android:layout_below="@+id/Scan"
+    android:id="@+id/location"
+    android:layout_height="wrap_content" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10pt"
-        android:text="Location"
+        android:text="phone"
         android:textSize="10pt"
         android:textColor="@color/colorPrimary"
         android:textIsSelectable="true"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/Scan"
-        android:id="@+id/location"
+        android:id="@+id/phone"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10pt"
+        android:text="rating"
+        android:textSize="10pt"
+        android:textColor="@color/colorPrimary"
+        android:textIsSelectable="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/Scan"
+        android:id="@+id/rating"
         android:layout_height="wrap_content" />
 
 
