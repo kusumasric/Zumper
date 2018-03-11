@@ -4,7 +4,7 @@
 ## API's Used-
 
 1.https://developers.google.com/places/web-service/details
-2.2)https://maps.googleapis.com/maps/api/place/textsearch/xml?query=restaurants+in+Sydney&key=YOUR_API_KEY
+2.https://maps.googleapis.com/maps/api/place/textsearch/xml?query=restaurants+in+Sydney&key=YOUR_API_KEY
 
 ## Libraries Used:-
 
